@@ -1,15 +1,19 @@
 # This file sets the following variables:
 #   mediocr-dicom_USE_FILE      - include() this to use mediocr-dicom
 #   mediocr-dicom_INCLUDE_DIRS  - C++ include directories
+#   mediocr-dicom_VERSION_MAJOR - major version (must be equal to requested version)
+#   mediocr-dicom_VERSION_MINOR - minor version (must be at least the requested version)
 #   mediocr-dicom_FOUND
 #
 # Copy this file to your external project directory and put this in your
 # CMakeLists.txt:
-#   find_package(mediocr-dicom REQUIRED)
+#   find_package(mediocr-dicom @mediocr-dicom_VERSION_MAJOR@.@mediocr-dicom_VERSION_MINOR@ REQUIRED)
 #   include(${mediocr-dicom_USE_FILE})
 # Then, you can use the mediocr-dicom targets like normal.
 
 set(mediocr-dicom_path "@CMAKE_INSTALL_PREFIX@")
+set(mediocr-dicom_VERSION_MAJOR "@mediocr-dicom_VERSION_MAJOR@")
+set(mediocr-dicom_VERSION_MINOR "@mediocr-dicom_VERSION_MINOR@")
 
 IF(NOT EXISTS "${mediocr-dicom_path}/lib/cmake/mediocr-dicom/mediocr-dicom-targets.cmake")
 	message(FATAL_ERROR "Your mediocr-dicom-config.cmake points to a mediocr-dicom install "
@@ -32,4 +36,4 @@ set(mediocr-dicom_required_definitions "-DHAVE_CONFIG_H")
 # Necessary for C++11
 list(APPEND mediocr-dicom_required_definitions "-std=c++0x")
 
-mark_as_advanced(mediocr-dicom_exported_targets mediocr-dicom_include_dir mediocr-dicom_path)
+mark_as_advanced(mediocr-dicom_exported_targets mediocr-dicom_include_dir mediocr-dicom_path mediocr-dicom_VERSION_MINOR mediocr-dicom_VERSION_MAJOR)

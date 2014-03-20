@@ -2,6 +2,12 @@ cmake_minimum_required(VERSION 2.6)
 
 project(mediocr-dicom)
 
+# Our current version
+# When doing backwards compatible changes, raise the MINOR version
+# When doing backwards incompatible changes, raise MAJOR and set MINOR to 0
+set(mediocr-dicom_VERSION_MAJOR 1)
+set(mediocr-dicom_VERSION_MINOR 0)
+
 # make {#include <mediocr-dicom/...>} work inside the repository
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -22,6 +28,8 @@ target_link_libraries(mediocr-dicom ${DCMTK_LIBRARIES})
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/mediocr-dicom-config.cmake.in
 	${CMAKE_CURRENT_BINARY_DIR}/mediocr-dicom-config.cmake @ONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/mediocr-dicom-config-version.cmake.in
+	${CMAKE_CURRENT_BINARY_DIR}/mediocr-dicom-config-version.cmake @ONLY)
 
 install(TARGETS mediocr-dicom EXPORT mediocr-dicom-targets ARCHIVE DESTINATION lib)
 install(FILES
@@ -31,6 +39,7 @@ install(FILES
 install(FILES
 	cmake/Usemediocr-dicom.cmake
 	${CMAKE_CURRENT_BINARY_DIR}/mediocr-dicom-config.cmake
+	${CMAKE_CURRENT_BINARY_DIR}/mediocr-dicom-config-version.cmake
 	cmake/modules/FindPackageHandleStandardArgs.cmake
 	DESTINATION lib/cmake/mediocr-dicom/)
 install(EXPORT mediocr-dicom-targets DESTINATION lib/cmake/mediocr-dicom/)
