@@ -1,0 +1,35 @@
+# This file sets the following variables:
+#   mediocr-dicom_USE_FILE      - include() this to use mediocr-dicom
+#   mediocr-dicom_INCLUDE_DIRS  - C++ include directories
+#   mediocr-dicom_FOUND
+#
+# Copy this file to your external project directory and put this in your
+# CMakeLists.txt:
+#   find_package(mediocr-dicom REQUIRED)
+#   include(${mediocr-dicom_USE_FILE})
+# Then, you can use the mediocr-dicom targets like normal.
+
+set(mediocr-dicom_path "@CMAKE_INSTALL_PREFIX@")
+
+IF(NOT EXISTS "${mediocr-dicom_path}/lib/cmake/mediocr-dicom/mediocr-dicom-targets.cmake")
+	message(FATAL_ERROR "Your mediocr-dicom-config.cmake points to a mediocr-dicom install "
+		"location that does not seem valid. Please re-install mediocr-dicom "
+		"and use the mediocr-dicom-config.cmake from that installation.")
+ENDIF()
+
+set(mediocr-dicom_exported_targets "${mediocr-dicom_path}/lib/cmake/mediocr-dicom/mediocr-dicom-targets.cmake")
+set(mediocr-dicom_USE_FILE "${mediocr-dicom_path}/lib/cmake/mediocr-dicom/Usemediocr-dicom.cmake")
+set(mediocr-dicom_FOUND 1)
+
+set(mediocr-dicom_include_dir "${mediocr-dicom_path}/include")
+foreach(include_dir ${ITK_INCLUDE_DIRS} ${VTK_INCLUDE_DIRS} ${mediocr-dicom_include_dir})
+	list(APPEND mediocr-dicom_INCLUDE_DIRS ${include_dir})
+endforeach(include_dir)
+
+# Necessary for DCMTK
+set(mediocr-dicom_required_definitions "-DHAVE_CONFIG_H")
+
+# Necessary for C++11
+list(APPEND mediocr-dicom_required_definitions "-std=c++0x")
+
+mark_as_advanced(mediocr-dicom_exported_targets mediocr-dicom_include_dir mediocr-dicom_path)

@@ -20,8 +20,17 @@ add_definitions("-DHAVE_CONFIG_H")
 add_library(mediocr-dicom src/dicom_file.cpp src/dicom_coders.cpp)
 target_link_libraries(mediocr-dicom ${DCMTK_LIBRARIES})
 
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/mediocr-dicom-config.cmake.in
+	${CMAKE_CURRENT_BINARY_DIR}/mediocr-dicom-config.cmake @ONLY)
+
 install(TARGETS mediocr-dicom EXPORT mediocr-dicom-targets ARCHIVE DESTINATION lib)
 install(FILES
 	mediocr-dicom/dicom_file.hpp
 	mediocr-dicom/dicom_coders.hpp
 	DESTINATION "include/mediocr-dicom")
+install(FILES
+	cmake/Usemediocr-dicom.cmake
+	${CMAKE_CURRENT_BINARY_DIR}/mediocr-dicom-config.cmake
+	cmake/modules/FindPackageHandleStandardArgs.cmake
+	DESTINATION lib/cmake/mediocr-dicom/)
+install(EXPORT mediocr-dicom-targets DESTINATION lib/cmake/mediocr-dicom/)
