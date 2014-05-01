@@ -6,7 +6,7 @@ project(mediocr-dicom)
 # When doing backwards compatible changes, raise the MINOR version
 # When doing backwards incompatible changes, raise MAJOR and set MINOR to 0
 set(mediocr-dicom_VERSION_MAJOR 1)
-set(mediocr-dicom_VERSION_MINOR 0)
+set(mediocr-dicom_VERSION_MINOR 1)
 
 # make {#include <mediocr-dicom/...>} work inside the repository
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
