@@ -123,13 +123,14 @@ foreach(dir
 endforeach()
 
 if(UNIX)
-  if(APPLE)
-    list(APPEND LOCAL_DCMTK_LIBRARIES z pthread ssl png xml2 jpeg tiff CharLS)
-  else()
-    list(APPEND LOCAL_DCMTK_LIBRARIES z pthread ssl png xml2 jpeg tiff wrap CharLS)
-  endif()
+  list(APPEND LOCAL_DCMTK_LIBRARIES z pthread ssl png xml2 jpeg tiff CharLS)
+  option(DCMTK_need_libwrap "" TRUE)
 elseif(WIN32)
   list(APPEND LOCAL_DCMTK_LIBRARIES netapi32 wsock32)
+endif()
+
+if(DCMTK_need_libwrap)
+	list(APPEND LOCAL_DCMTK_LIBRARIES wrap)
 endif()
 
 if(DCMTK_ofstd_INCLUDE_DIR)
