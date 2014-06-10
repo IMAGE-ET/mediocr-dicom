@@ -1,7 +1,7 @@
 #include <mediocr-dicom/dicom_file.hpp>
 #include <mediocr-dicom/dicom_coders.hpp>
 
-#include <dcmtk/dcmjpeg/djrplol.h>
+#include <dcmtk/dcmjpls/djrparam.h>
 
 namespace mediocr {
 	template <>
@@ -27,9 +27,8 @@ namespace mediocr {
 	}
 
 	void dicom_file::write_to_file(std::string filename) {
-		// Selection Value 7 is chosen because this proved to be the best choice for mammography images
-		// (R. Visser, Lossless Compression of Digital Mammograms, IWDM 2006)
-		write_to_file(filename, dicom::create_transfer_syntax(EXS_JPEGProcess14TransferSyntax, DJ_RPLossless(7)));
+		// JPEG-LS Lossless gets really nice compression and it's lossless!
+		write_to_file(filename, dicom::create_transfer_syntax(EXS_JPEGLSLossless, DJLSRepresentationParameter(0, true)));
 	}
 
 	void dicom_file::write_to_file(std::string filename, E_TransferSyntax syntax, DcmRepresentationParameter* parameters) {

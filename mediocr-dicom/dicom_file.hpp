@@ -384,7 +384,7 @@ struct dicom_file {
 		set_decimal_string(DCM_CompressionForce, {x});
 	}
 
-	//! Saves a file in lossless JPEG encoding, best suited for mammograms (R. Visser, Lossless Compression of Digital Mammograms, IWDM 2006)
+	//! Saves a file in lossless JPEG-LS encoding
 	void write_to_file(std::string filename);
 
 private:
