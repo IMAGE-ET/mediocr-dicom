@@ -234,8 +234,11 @@ struct dicom_file {
 	DCM_TAG_INTSTRING(relative_xray_exposure, DCM_RelativeXRayExposure);
 	DCM_TAG_INTSTRING(exposure, DCM_Exposure);
 	DCM_TAG_INTSTRING(exposure_in_uas, DCM_ExposureInuAs);
+	DCM_TAG_INTSTRING(instance_number, DCM_InstanceNumber);
+	DCM_TAG_INTSTRING(series_number, DCM_SeriesNumber);
 
 	DCM_TAG_STRING(voi_lut_function, DCM_VOILUTFunction);
+	DCM_TAG_STRING(instance_uid, DCM_SOPInstanceUID);
 	DCM_TAG_STRING(study_uid, DCM_StudyInstanceUID);
 	DCM_TAG_STRING(series_uid, DCM_SeriesInstanceUID);
 	DCM_TAG_STRING(modality, DCM_Modality);
@@ -244,7 +247,10 @@ struct dicom_file {
 	DCM_TAG_STRING(manufacturer, DCM_Manufacturer);
 	DCM_TAG_STRING(presentation_intent_type, DCM_PresentationIntentType);
 	DCM_TAG_STRING(patient_name, DCM_PatientName);
+	DCM_TAG_STRING(patient_id, DCM_PatientID);
+	DCM_TAG_STRING(study_id, DCM_StudyID);
 	DCM_TAG_STRING(study_date, DCM_StudyDate);
+	DCM_TAG_STRING(study_time, DCM_StudyTime);
 	DCM_TAG_STRING(patient_birth_date, DCM_PatientBirthDate);
 	DCM_TAG_STRING(patient_age, DCM_PatientAge);
 	DCM_TAG_STRING(patient_sex, DCM_PatientSex);
