@@ -32,6 +32,18 @@ namespace mediocr {
 	}
 
 	void dicom_file::write_to_file(std::string filename, E_TransferSyntax syntax, DcmRepresentationParameter* parameters) {
+		update_content_date_time();
+
+		header.getDataset()->chooseRepresentation(syntax, parameters);
+
+		auto const result = header.saveFile(filename.c_str(), syntax);
+		if(result.bad()){
+			std::string msg{std::string("Error when saving: ") + result.text()};
+			throw std::runtime_error(msg);
+		}
+	}
+
+	void dicom_file::update_content_date_time(){
 		time_t rawtime;
 		time(&rawtime);
 		struct tm* timeinfo = localtime(&rawtime);
@@ -46,13 +58,5 @@ namespace mediocr {
 
 		set_string(DCM_ContentDate, dt);
 		set_string(DCM_ContentTime, tm);
-
-		header.getDataset()->chooseRepresentation(syntax, parameters);
-
-		auto const result = header.saveFile(filename.c_str(), syntax);
-		if(result.bad()){
-			std::string msg{std::string("Error when saving: ") + result.text()};
-			throw std::runtime_error(msg);
-		}
 	}
 }

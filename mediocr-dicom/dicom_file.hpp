@@ -397,6 +397,9 @@ struct dicom_file {
 		set_decimal_string(DCM_CompressionForce, {x});
 	}
 
+	//! Updates ContentDate & ContentTime to the current time
+	void update_content_date_time();
+
 	//! Saves a file in lossless JPEG-LS encoding
 	void write_to_file(std::string filename);
 
