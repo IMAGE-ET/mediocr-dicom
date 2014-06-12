@@ -200,6 +200,13 @@ struct dicom_file {
 	std::string get_ ## func () const { \
 		return get_string(tag); \
 	} \
+	std::string get_ ## func (std::string def) const { \
+		try { \
+			return get_string(tag); \
+		} catch (mediocr::dicom_key_error const&) { \
+			return def; \
+		} \
+	} \
 	void set_ ## func (std::string v) { \
 		set_string(tag, v); \
 	}
