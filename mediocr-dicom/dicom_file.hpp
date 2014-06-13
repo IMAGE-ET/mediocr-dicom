@@ -397,6 +397,10 @@ struct dicom_file {
 		set_decimal_string(DCM_CompressionForce, {x});
 	}
 
+	void generate_sop_instance_uid(char const* site_root = nullptr);
+	void generate_series_instance_uid(char const* site_root = nullptr);
+	void generate_study_instance_uid(char const* site_root = nullptr);
+
 	//! Updates ContentDate & ContentTime to the current time
 	void update_content_date_time();
 

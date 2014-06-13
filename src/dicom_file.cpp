@@ -43,6 +43,24 @@ namespace mediocr {
 		}
 	}
 
+	void dicom_file::generate_series_instance_uid(const char* site_root){
+		char uid[1024];
+		dcmGenerateUniqueIdentifier(uid, site_root);
+		set_series_uid(uid);
+	}
+
+	void dicom_file::generate_study_instance_uid(const char* site_root){
+		char uid[1024];
+		dcmGenerateUniqueIdentifier(uid, site_root);
+		set_study_uid(uid);
+	}
+
+	void dicom_file::generate_sop_instance_uid(const char* site_root){
+		char uid[1024];
+		dcmGenerateUniqueIdentifier(uid, site_root);
+		set_instance_uid(uid);
+	}
+
 	void dicom_file::update_content_date_time(){
 		time_t rawtime;
 		time(&rawtime);
