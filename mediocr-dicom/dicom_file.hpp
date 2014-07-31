@@ -407,10 +407,9 @@ struct dicom_file {
 	//! Saves a file in lossless JPEG-LS encoding
 	void write_to_file(std::string filename);
 
-private:
+	//! Saves a file in whatever syntax and parameters you supply. Check the DCMTK manual for more information.
 	void write_to_file(std::string filename, E_TransferSyntax transfer_syntax, DcmRepresentationParameter* p);
 
-public:
 	//! Saves a file in whatever syntax and parameters you supply. Check the DCMTK manual for more information.
 	template <typename Parameters>
 	void write_to_file(std::string filename, dicom::transfer_syntax<Parameters> t){
