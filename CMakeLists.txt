@@ -8,23 +8,22 @@ project(mediocr-dicom)
 set(mediocr-dicom_VERSION_MAJOR 1)
 set(mediocr-dicom_VERSION_MINOR 5)
 
-# make {#include <mediocr-dicom/...>} work inside the repository
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
-
-# C++11 mode
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-
 # Use our own FindDCMTK.cmake, in which library linking order is fixed
 SET(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules" ${CMAKE_MODULE_PATH})
 
 # Include DCMTK
 find_package(DCMTK REQUIRED)
-include_directories(SYSTEM ${DCMTK_INCLUDE_DIRS})
-# Fix DCMTK compilation
-add_definitions("-DHAVE_CONFIG_H")
 
 add_library(mediocr-dicom src/dicom_file.cpp src/dicom_coders.cpp)
 target_link_libraries(mediocr-dicom ${DCMTK_LIBRARIES})
+target_compile_options(mediocr-dicom PUBLIC "-std=c++11")
+target_compile_definitions(mediocr-dicom PUBLIC "-DHAVE_CONFIG_H") # Fix DCMTK Compilation
+target_include_directories(mediocr-dicom SYSTEM PUBLIC ${DCMTK_INCLUDE_DIRS})
+target_include_directories(mediocr-dicom
+	INTERFACE
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+		$<INSTALL_INTERFACE:"..">
+)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/mediocr-dicom-config.cmake.in
 	${CMAKE_CURRENT_BINARY_DIR}/mediocr-dicom-config.cmake @ONLY)
