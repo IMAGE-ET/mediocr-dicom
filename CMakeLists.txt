@@ -22,7 +22,7 @@ target_include_directories(mediocr-dicom SYSTEM PUBLIC ${DCMTK_INCLUDE_DIRS})
 target_include_directories(mediocr-dicom
 	INTERFACE
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-		$<INSTALL_INTERFACE:".">
+		$<INSTALL_INTERFACE:.>
 )
 
 find_package(wubwubcmake REQUIRED)
