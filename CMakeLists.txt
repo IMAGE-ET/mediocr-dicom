@@ -25,7 +25,7 @@ target_include_directories(mediocr-dicom
 		$<INSTALL_INTERFACE:.>
 )
 
-find_package(wubwubcmake REQUIRED)
+find_package(wubwubcmake 1 REQUIRED)
 include(wubwubcmake/sane_install)
 
 sane_install(TARGETS mediocr-dicom HEADERS ${headers})
