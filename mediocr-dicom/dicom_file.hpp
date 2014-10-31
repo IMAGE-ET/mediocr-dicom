@@ -65,6 +65,7 @@ struct dicom_file {
 	}
 
 	DcmDataset& get_dataset(){ return *header.getDataset(); }
+	DcmDataset const& get_dataset() const { return *header.getDataset(); }
 
 	uint16_t get_bytes_per_pixel() const {
 		return std::ceil(get_bits_allocated()/float((sizeof(char)*8)));
