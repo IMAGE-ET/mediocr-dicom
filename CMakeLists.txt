@@ -24,7 +24,7 @@ target_compile_options(mediocr-dicom PUBLIC "-std=c++11")
 target_compile_definitions(mediocr-dicom PUBLIC "-DHAVE_CONFIG_H") # Fix DCMTK Compilation
 target_include_directories(mediocr-dicom SYSTEM PUBLIC ${DCMTK_INCLUDE_DIRS})
 target_include_directories(mediocr-dicom
-	INTERFACE
+	PUBLIC
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 		$<INSTALL_INTERFACE:.>
 )
