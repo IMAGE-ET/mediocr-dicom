@@ -11,6 +11,8 @@
 #include <dcmtk/dcmdata/dcfilefo.h>
 #include <dcmtk/dcmdata/dcdict.h>
 #include <dcmtk/dcmdata/dcdeftag.h>
+#include <dcmtk/dcmjpeg/djrplol.h>
+#include <dcmtk/dcmjpls/djrparam.h>
 
 namespace mediocr {
 
@@ -27,6 +29,14 @@ template <typename Parameters>
 transfer_syntax<Parameters> create_transfer_syntax(decltype(transfer_syntax<Parameters>::syntax) const& s, Parameters p) {
 	return transfer_syntax<Parameters>{s, p};
 }
+
+auto const jpeg_lossless_syntax = []{
+	return create_transfer_syntax(EXS_JPEGProcess14TransferSyntax, DJ_RPLossless(7));
+};
+
+auto const jpeg_ls_lossless_syntax = []{
+	return create_transfer_syntax(EXS_JPEGLSLossless, DJLSRepresentationParameter(0, true));
+};
 
 }
 
