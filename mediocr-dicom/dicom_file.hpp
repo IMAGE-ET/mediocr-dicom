@@ -431,8 +431,8 @@ struct dicom_file {
 		remove(key, true);
 	}
 
-	void remove(DcmTagKey key, bool remove_all){
-		if(header.getDataset()->findAndDeleteElement(key, remove_all).bad()){
+	void remove(DcmTagKey key, bool remove_all_){
+		if(header.getDataset()->findAndDeleteElement(key, remove_all_).bad()){
 			throw mediocr::dicom_key_error("Failed to remove some key", key);
 		}
 	}
