@@ -14,6 +14,11 @@
 #include <dcmtk/dcmjpeg/djrplol.h>
 #include <dcmtk/dcmjpls/djrparam.h>
 
+// Remove leaky macro from DCMTK -- we don't want it. 
+#if defined(ItemTag)
+	#undef ItemTag
+#endif
+
 namespace mediocr {
 
 namespace dicom {

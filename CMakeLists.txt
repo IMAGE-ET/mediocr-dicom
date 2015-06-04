@@ -6,7 +6,7 @@ project(mediocr-dicom)
 # When doing backwards compatible changes, raise the MINOR version
 # When doing backwards incompatible changes, raise MAJOR and set MINOR to 0
 set(mediocr-dicom_VERSION_MAJOR 2)
-set(mediocr-dicom_VERSION_MINOR 2)
+set(mediocr-dicom_VERSION_MINOR 3)
 
 # Use our own FindDCMTK.cmake, in which library linking order is fixed
 SET(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules" ${CMAKE_MODULE_PATH})
