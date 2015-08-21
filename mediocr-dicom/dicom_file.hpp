@@ -6,6 +6,7 @@
 #include <cmath>
 #include <sstream>
 #include <stdint.h>
+#include <mutex>
 
 #include <dcmtk/dcmdata/dcuid.h>
 #include <dcmtk/dcmdata/dcfilefo.h>
@@ -77,6 +78,15 @@ struct dicom_file {
 		if(header.error().bad()){
 			throw std::runtime_error("Tried to initialize dicom_file with a bad dicom");
 		}
+	}
+
+	dicom_file(dicom_file const &rh) {
+		*this = rh;
+	}
+
+	dicom_file &operator=(dicom_file const &rh) {
+		std::lock_guard<std::mutex> lock(rh.copy_lock);
+		header = rh.header;
 	}
 
 	DcmDataset& get_dataset(){ return *header.getDataset(); }
@@ -609,6 +619,7 @@ private:
 	}
 	
 	mutable DcmFileFormat header;
+	mutable std::mutex copy_lock;
 };
 
 template <>
