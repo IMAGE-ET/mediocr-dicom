@@ -87,6 +87,7 @@ struct dicom_file {
 	dicom_file &operator=(dicom_file const &rh) {
 		std::lock_guard<std::mutex> lock(rh.copy_lock);
 		header = rh.header;
+		return *this;
 	}
 
 	DcmDataset& get_dataset(){ return *header.getDataset(); }
