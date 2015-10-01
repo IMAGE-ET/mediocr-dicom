@@ -11,6 +11,7 @@ set(mediocr-dicom_VERSION_MINOR 4)
 find_package(wubwubcmake 1.2 REQUIRED)
 include(wubwubcmake/sane_install)
 include(wubwubcmake/position_independent_code)
+include(wubwubcmake/wub_find_modules)
 
 find_package(DCMTK REQUIRED)
 
