@@ -12,6 +12,8 @@ find_package(wubwubcmake 1.2 REQUIRED)
 include(wubwubcmake/sane_install)
 include(wubwubcmake/position_independent_code)
 
+find_package(DCMTK REQUIRED)
+
 file(GLOB sources "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/mediocr-dicom/*.hpp")
 add_library(mediocr-dicom ${sources} ${headers})
