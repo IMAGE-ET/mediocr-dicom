@@ -8,11 +8,7 @@ project(mediocr-dicom)
 set(mediocr-dicom_VERSION_MAJOR 2)
 set(mediocr-dicom_VERSION_MINOR 4)
 
-# Use our own FindDCMTK.cmake, in which library linking order is fixed
-SET(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules" ${CMAKE_MODULE_PATH})
-find_package(DCMTK REQUIRED)
-
-find_package(wubwubcmake 1.1 REQUIRED)
+find_package(wubwubcmake 1.2 REQUIRED)
 include(wubwubcmake/sane_install)
 include(wubwubcmake/position_independent_code)
 
