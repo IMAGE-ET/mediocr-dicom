@@ -191,6 +191,51 @@ struct dicom_file {
 		return TagIterator();
 	}
 
+	void convertLatin1ToUtf8(DcmElement &element) {
+		// TODO: this should be recursive
+		if(element.isAffectedBySpecificCharacterSet()) {
+			char *val = nullptr;
+			OFCondition cond = element.getString(val);
+			if(cond.good() && val != nullptr) {
+				std::string value = val;
+				for(size_t i = 0; i < value.size(); ++i) {
+					unsigned char c = value[i];
+					if(c < 128) {
+						// First 128 values of ISO-8859-1 and UTF-8 are the same
+					} else if(c < 192) {
+						throw std::runtime_error("Encountered ISO-8859-1 control code, refusing to process");
+					} else {
+						char u[2];
+						u[0] = 0xc2 + (c > 0xbf);
+						u[1] = 0x80 + (c & 0x3f);
+						value.replace(i, 1, u, 2);
+						i++; // skip this character
+					}
+				}
+				element.putString(value.c_str());
+			}
+		}
+	}
+
+	void convertToUTF8() {
+		// TODO: DCMTK 3.6.1 allows header.convertToUTF8(), but 3.6.0 doesn't have this method
+		// yet, so implement it ourselves
+		std::string characterSet = get_specific_character_set("");
+		if(characterSet.empty() || characterSet == "ASCII" || characterSet == "ISO_IR 6") {
+			// It's ASCII, nothing to do
+		} else if(characterSet == "ISO_IR 192") {
+			// It's already UTF-8, nothing to do
+		} else if(characterSet == "ISO_IR 100") {
+			// Convert from ISO-8859-1
+			for(auto it = begin(); it != end(); ++it) {
+				convertLatin1ToUtf8(*it);
+			}
+			set_specific_character_set("ISO_IR 192");
+		} else {
+			throw std::runtime_error("Could not convert DCM dataset to UTF-8: unsupported character set '" + characterSet + "'");
+		}
+	}
+
 	void dumpTags(std::ostream &out) {
 		for(auto it = begin(); it != end(); ++it) {
 			out << it.getTagName();
@@ -296,6 +341,7 @@ struct dicom_file {
 	DCM_TAG_STRING(anode_target_material, DCM_AnodeTargetMaterial);
 	DCM_TAG_STRING(filter_material, DCM_FilterMaterial);
 	DCM_TAG_STRING(photometric_interpretation, DCM_PhotometricInterpretation);
+	DCM_TAG_STRING(specific_character_set, DCM_SpecificCharacterSet);
 
 	DCM_TAG_DOUBLE_ARRAY(pixel_row_spacing, DCM_PixelSpacing, 0);
 	DCM_TAG_DOUBLE_ARRAY(pixel_column_spacing, DCM_PixelSpacing, 1);
