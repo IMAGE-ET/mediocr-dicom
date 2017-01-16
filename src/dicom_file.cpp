@@ -68,7 +68,7 @@ namespace mediocr {
 	void dicom_file::update_content_date_time(){
 		time_t rawtime;
 		time(&rawtime);
-		struct tm* timeinfo = localtime(&rawtime);
+		struct tm* timeinfo = gmtime(&rawtime); // Use UTC
 
 		char tm[7] = {0};
 		sprintf(tm, "%02d%02d%02d", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
@@ -80,5 +80,6 @@ namespace mediocr {
 
 		set_string(DCM_ContentDate, dt);
 		set_string(DCM_ContentTime, tm);
+		set_string(DCM_TimezoneOffsetFromUTC, "+0000");
 	}
 }
