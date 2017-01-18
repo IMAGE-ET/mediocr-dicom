@@ -37,7 +37,10 @@ transfer_syntax<Parameters> create_transfer_syntax(decltype(transfer_syntax<Para
 }
 
 auto const jpeg_lossless_syntax = []{
-	return create_transfer_syntax(EXS_JPEGProcess14TransferSyntax, DJ_RPLossless(7));
+#if OFFIS_DCMTK_VERSION_NUMBER <= 360
+#  define EXS_JPEGProcess14     EXS_JPEGProcess14TransferSyntax
+#endif
+	return create_transfer_syntax(EXS_JPEGProcess14, DJ_RPLossless(7));
 };
 
 auto const jpeg_ls_lossless_syntax = []{
@@ -548,6 +551,9 @@ struct dicom_file {
 			DCM_ContentSequence,
 			DCM_StorageMediaFileSetUID,
 			DCM_ReferencedFrameOfReferenceUID,
+#if !defined(DCM_RelatedFrameOfReferenceUID) && defined(DCM_RETIRED_RelatedFrameOfReferenceUID)
+#define DCM_RelatedFrameOfReferenceUID DCM_RETIRED_RelatedFrameOfReferenceUID
+#endif
 			DCM_RelatedFrameOfReferenceUID,
 			DCM_CompressionForce,
 		};
